@@ -10,11 +10,13 @@ app.use(express.json());
 
 // Import des routes
 const authRoutes = require("./routes/auth");
-const expenseRoutes = require("./routes/expenses"); // ✅ nouvelle route
+const expenseRoutes = require("./routes/expenses"); // ✅ Dépenses
+const incomeRoutes = require("./routes/incomes");   // ✅ Revenus
 
 // Utilisation des routes
 app.use("/api/auth", authRoutes);
-app.use("/api/expenses", expenseRoutes); // ✅ ajout ici
+app.use("/api/expenses", expenseRoutes); 
+app.use("/api/incomes", incomeRoutes);   // ✅ ajout ici
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
