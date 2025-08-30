@@ -1,12 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
-const { addIncome, getIncomes, updateIncome, deleteIncome } = require("../controllers/incomeController");
+const {
+  createIncome,
+  getIncomes,
+  updateIncome,
+  deleteIncome
+} = require("../controllers/incomeController");
 
-// Ajouter un revenu
-router.post("/", auth, addIncome);
+// Créer un revenu
+router.post("/", auth, createIncome);
 
-// Lister les revenus
+// Lister tous les revenus
 router.get("/", auth, getIncomes);
 
 // Modifier un revenu
