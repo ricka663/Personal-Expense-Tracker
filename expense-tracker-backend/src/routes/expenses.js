@@ -1,18 +1,43 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
-const { addExpense, getExpenses, updateExpense, deleteExpense } = require("../controllers/expenseController");
+const multer = require("multer");
+const path = require("path");
+const {
+  addExpense,
+  getExpenses,
+  updateExpense,
+  deleteExpense,
+  getReceipt
+} = require("../controllers/expenseController");
 
-// Ajouter une dépense
-router.post("/", auth, addExpense);
+// Configuration Multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // dossier où stocker
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + path.extname(file.originalname);
+    cb(null, uniqueName);
+  }
+});
+const upload = multer({ storage });
 
-// Lister les dépenses de l’utilisateur connecté
+// ================= Routes =================
+
+// ➕ Ajouter une dépense (avec fichier optionnel)
+router.post("/", auth, upload.single("receipt"), addExpense);
+
+// ➕ Lister les dépenses
 router.get("/", auth, getExpenses);
 
-// Modifier une dépense
-router.put("/:id", auth, updateExpense);
+// ➕ Modifier une dépense (upload fichier possible)
+router.put("/:id", auth, upload.single("receipt"), updateExpense);
 
-// Supprimer une dépense
+// ➕ Supprimer une dépense
 router.delete("/:id", auth, deleteExpense);
+
+// ➕ Télécharger un reçu
+router.get("/receipt/:id", auth, getReceipt);
 
 module.exports = router;

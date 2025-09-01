@@ -4,16 +4,20 @@ const auth = require("../middleware/auth");
 const {
   getMonthlySummary,
   getExpensesByCategory,
-  getMonthlyExpenses
+  getMonthlyExpenses,
+  getAlerts
 } = require("../controllers/summaryController");
 
-// Résumé mensuel
+// ================= Résumé mensuel =================
 router.get("/monthly", auth, getMonthlySummary);
 
-// Pie chart : dépenses par catégorie
+// ================= Pie chart : dépenses par catégorie =================
 router.get("/pie", auth, getExpensesByCategory);
 
-// Bar chart : dépenses mensuelles
+// ================= Bar chart : dépenses mensuelles =================
 router.get("/bars", auth, getMonthlyExpenses);
+
+// ================= Budget Monitoring / Alerts =================
+router.get("/alerts", auth, getAlerts);
 
 module.exports = router;
