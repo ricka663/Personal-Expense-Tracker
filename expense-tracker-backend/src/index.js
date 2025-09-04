@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ➕ Très important : servir les fichiers du dossier uploads
+// Très important : servir les fichiers du dossier uploads
 app.use("/uploads", express.static("uploads"));
 
 // Import des routes
